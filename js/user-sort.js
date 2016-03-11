@@ -84,10 +84,10 @@ var SortUsers = (function(){
         var surname = document.getElementById("surname");
         var age = document.getElementById("age");
         var position = document.getElementById("position");
-        if(name != "" &&
-            surname != "" &&
-            age != "" &&
-            position != "") {
+        if(name.value != "" &&
+            surname.value != "" &&
+            age.value != "" &&
+            position.value != "") {
             var newUser = {
                 name : name.value,
                 surname : surname.value,
