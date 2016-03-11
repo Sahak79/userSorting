@@ -76,6 +76,8 @@ var SortUsers = (function(){
         users.sort(sortBy("name", true, false)); // we sort initially by 'ASC'
         buildTableHeader();
         buildTableBody();
+        resetTableSortIcons();
+        element.getElementsByTagName('span')[0].style.opacity = 1; // make 'name' icon bold since we initially sort by 'name'
 
     }
 
