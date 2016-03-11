@@ -69,27 +69,27 @@ var SortUsers = (function(){
     }
 
     function addUser() {
-        var name = document.getElementById("name").value;
-        var surname = document.getElementById("surname").value;
-        var age = document.getElementById("age").value;
-        var position = document.getElementById("position").value;
+        var name = document.getElementById("name");
+        var surname = document.getElementById("surname");
+        var age = document.getElementById("age");
+        var position = document.getElementById("position");
         if(name != "" &&
             surname != "" &&
             age != "" &&
             position != "") {
             var newUser = {
-                name : name,
-                surname : surname,
-                age : age,
-                position : position
+                name : name.value,
+                surname : surname.value,
+                age : age.value,
+                position : position.value
             };
             users.push(newUser);
             clearTableBody();
             buildTableBody();
-            document.getElementById("name").value = "";
-            document.getElementById("surname").value = "";
-            document.getElementById("age").value = "";
-            document.getElementById("position").value = "";
+            name.value = "";
+            surname.value = "";
+            age.value = "";
+            position.value = "";
         } else {
             alert("Please fill all fields");
         }
@@ -190,22 +190,3 @@ var SortUsers = (function(){
 })();
 
 window.onload = function(){SortUsers.init("main")};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
