@@ -48,6 +48,10 @@ var SortUsers = (function(){
     }
 
     function sortUsers(e, field, reverse, isNumber) {
+        resetTableSortIcons();
+        var span = e.getElementsByTagName("span")[0];
+        span.style.opacity = 1;
+
         if(e.className == "ASC") {
             users.sort(sortBy(field, true, isNumber));
             e.className = "DESC";
@@ -57,6 +61,13 @@ var SortUsers = (function(){
         }
         clearTableBody();
         buildTableBody();
+    }
+
+    function resetTableSortIcons() {
+        var icons = element.getElementsByTagName('span');
+        for(var i = 0; i< icons.length; i++){
+            icons[i].style.opacity = 0.2;
+        }
     }
 
     function init(selector) {
