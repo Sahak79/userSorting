@@ -1,31 +1,31 @@
-var SortUsers = (function(){
+var users = [
+    {
+        name:      "Sahak",
+        surname:   "Babayan",
+        age:       "25",
+        position : "Junior software developer"
+    }, {
+        name:      "Luiza",
+        surname:   "Kharatyan",
+        age:       "24",
+        position : "Senior software developer"
+    }, {
+        name:      "Mary",
+        surname:   "Ghazaryan",
+        age:       "27",
+        position : "Middle software developer"
+    }, {
+        name:      "Khachatur",
+        surname:   "Vardanyan",
+        age:       "27",
+        position : "Senior software developer"
+    }
+];
+
+var SortableGrid = (function(){
 
     var element;
     var table;
-
-    var users = [
-        {
-            age:       "25",
-            name:      "Sahak",
-            surname:   "Babayan",
-            position : "Junior software developer"
-        }, {
-            age:       "24",
-            name:      "Luiza",
-            surname:   "Kharatyan",
-            position : "Senior software developer"
-        }, {
-            age:       "27",
-            name:      "Mary",
-            surname:   "Ghazaryan",
-            position : "Middle software developer"
-        }, {
-            age:       "27",
-            name:      "Khachatur",
-            surname:   "Vardanyan",
-            position : "Senior software developer"
-        }
-    ];
 
     function sortBy(field, reverse, isNumber) {
 
@@ -77,7 +77,9 @@ var SortUsers = (function(){
         buildTableHeader();
         buildTableBody();
         resetTableSortIcons();
-        element.getElementsByTagName('span')[0].style.opacity = 1; // make 'name' icon bold since we initially sort by 'name'
+        if(element.getElementsByTagName('span').length > 0){
+            element.getElementsByTagName('span')[0].style.opacity = 1; // make 'name' icon bold since we initially sort by 'name'
+        }
 
     }
 
@@ -109,51 +111,74 @@ var SortUsers = (function(){
 
     }
 
+    function firstToUpperCase( str ) {
+        return str.substr(0, 1).toUpperCase() + str.substr(1);
+    }
+
     function buildTableHeader() {
         var thead = document.createElement('thead');
         var tr = document.createElement('tr');
 
-        var th_name = document.createElement('th');
-        var th_surname = document.createElement('th');
-        var th_age = document.createElement('th');
-        var th_position = document.createElement('th');
+        for(var index in users[0]) {
+            if (users[0].hasOwnProperty(index)) {
+                var th_ = document.createElement('th');
+                var th_text = document.createTextNode(firstToUpperCase(index));
+                var th_sort_icon = document.createElement("span");
+                th_.appendChild(th_text);
+                th_.appendChild(th_sort_icon);
+                !isNaN(users[0][index]) ?
+                    th_.setAttribute("onclick", "SortableGrid.sortUsers(this, '"+index+"', false, true)")
+                    :
+                    th_.setAttribute("onclick", "SortableGrid.sortUsers(this, '"+index+"', false, false)");
+                th_.setAttribute("class", "DESC");
+                tr.appendChild(th_);
+            }
+        }
 
-        var name = document.createTextNode("Name");
-        var surname = document.createTextNode("Surname");
-        var age = document.createTextNode("Age");
-        var position = document.createTextNode("Position");
 
-        var name_sort_icon = document.createElement("span");
-        var surname_sort_icon = document.createElement("span");
-        var age_sort_icon = document.createElement("span");
-        var position_sort_icon = document.createElement("span");
-
-        th_name.appendChild(name);
-        th_name.appendChild(name_sort_icon);
-        th_surname.appendChild(surname);
-        th_surname.appendChild(surname_sort_icon);
-        th_age.appendChild(age);
-        th_age.appendChild(age_sort_icon);
-        th_position.appendChild(position);
-        th_position.appendChild(position_sort_icon);
-
-        th_name.setAttribute("onclick", "SortUsers.sortUsers(this, 'name', false, false)");
-        th_surname.setAttribute("onclick", "SortUsers.sortUsers(this, 'surname', false, false)");
-        th_age.setAttribute("onclick", "SortUsers.sortUsers(this, 'age', false, true)");
-        th_position.setAttribute("onclick", "SortUsers.sortUsers(this, 'position', false, false)");
-
-        th_name.setAttribute("class", "DESC");
-        th_surname.setAttribute("class", "DESC");
-        th_age.setAttribute("class", "DESC");
-        th_position.setAttribute("class", "DESC");
-
-        tr.appendChild(th_name);
-        tr.appendChild(th_surname);
-        tr.appendChild(th_age);
-        tr.appendChild(th_position);
+        //var th_name = document.createElement('th');
+        //var th_surname = document.createElement('th');
+        //var th_age = document.createElement('th');
+        //var th_position = document.createElement('th');
+        //
+        //var name = document.createTextNode("Name");
+        //var surname = document.createTextNode("Surname");
+        //var age = document.createTextNode("Age");
+        //var position = document.createTextNode("Position");
+        //
+        //var name_sort_icon = document.createElement("span");
+        //var surname_sort_icon = document.createElement("span");
+        //var age_sort_icon = document.createElement("span");
+        //var position_sort_icon = document.createElement("span");
+        //
+        //th_name.appendChild(name);
+        //th_name.appendChild(name_sort_icon);
+        //
+        //th_surname.appendChild(surname);
+        //th_surname.appendChild(surname_sort_icon);
+        //
+        //th_age.appendChild(age);
+        //th_age.appendChild(age_sort_icon);
+        //
+        //th_position.appendChild(position);
+        //th_position.appendChild(position_sort_icon);
+        //
+        //th_name.setAttribute("onclick", "SortableGrid.sortUsers(this, 'name', false, false)");
+        //th_surname.setAttribute("onclick", "SortableGrid.sortUsers(this, 'surname', false, false)");
+        //th_age.setAttribute("onclick", "SortableGrid.sortUsers(this, 'age', false, true)");
+        //th_position.setAttribute("onclick", "SortableGrid.sortUsers(this, 'position', false, false)");
+        //
+        //th_name.setAttribute("class", "DESC");
+        //th_surname.setAttribute("class", "DESC");
+        //th_age.setAttribute("class", "DESC");
+        //th_position.setAttribute("class", "DESC");
+        //
+        //tr.appendChild(th_name);
+        //tr.appendChild(th_surname);
+        //tr.appendChild(th_age);
+        //tr.appendChild(th_position);
 
         thead.appendChild(tr);
-
         table.appendChild(thead);
     }
 
@@ -202,4 +227,4 @@ var SortUsers = (function(){
     }
 })();
 
-window.onload = function(){SortUsers.init("main")};
+window.onload = function(){SortableGrid.init("main")};
